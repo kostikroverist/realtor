@@ -8,7 +8,7 @@ import { FaHome } from "react-icons/fa";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () =>  setIsOpen(!isOpen);
 
   return (
     <div
