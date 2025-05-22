@@ -1,10 +1,15 @@
+import Categories from "./components/category/Categories";
+import CounterSells from "./components/CounterSells";
 import Header from "./components/header";
+import InfoRealtor from "./components/InfoRealtor";
 
 export default function Home() {
   return (
-   
-   <>
-   <Header></Header>
-   </>
+    <>
+      <Header />
+      <InfoRealtor />
+      <CounterSells />
+      <Categories />
+    </>
   );
 }
