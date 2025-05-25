@@ -15,7 +15,7 @@ const Header = () => {
       className="h-screen bg-cover bg-center bg-black/10 bg-blend-darken"
       style={{
         backgroundImage:
-          "url('https://7themes.su/_ph/35/672523225.jpg?1747746079')",
+          "url('./images/2.jpg')",
       }}
     >
       <div className="max-w-[1280px] mx-auto">
@@ -27,11 +27,11 @@ const Header = () => {
           {/* Desktop menu */}
           <div className="hidden md:flex gap-7">
             <Link href="/">Головна</Link>
-            <Link href="/buy">Купити</Link>
-            <Link href="/rent">Оренда</Link>
-            <Link href="/land">Земельні ділянки</Link>
-            <Link href="/houses">Будинки</Link>
-            <Link href="/about">Про мене</Link>
+            <Link href="category/buy">Купити</Link>
+            <Link href="category/rent">Оренда</Link>
+            <Link href="category/land">Земельні ділянки</Link>
+            <Link href="category/houses">Будинки</Link>
+            <Link href="category/about">Про мене</Link>
           </div>
 
           {/* Burger button */}
@@ -46,12 +46,12 @@ const Header = () => {
           {/* Mobile menu */}
           {isOpen && (
             <div className="absolute top-full left-0 w-full bg-black/90 text-white flex flex-col gap-6 p-6 z-10 md:hidden">
-              <Link href="/">Головна</Link>
-              <Link href="/buy">Купити</Link>
-              <Link href="/rent">Оренда</Link>
-              <Link href="/land">Земельні ділянки</Link>
-              <Link href="/houses">Будинки</Link>
-              <Link href="/about">Про мене</Link>
+             <Link href="/">Головна</Link>
+            <Link href="category/buy">Купити</Link>
+            <Link href="category/rent">Оренда</Link>
+            <Link href="category/land">Земельні ділянки</Link>
+            <Link href="category/houses">Будинки</Link>
+            <Link href="category/about">Про мене</Link>
             </div>
           )}
         </nav>

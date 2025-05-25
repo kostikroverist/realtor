@@ -1,4 +1,4 @@
-import Categories from "./components/category/Categories";
+import Categories from "./components/categoryComponent/Categories";
 import CounterSells from "./components/CounterSells";
 import Header from "./components/header";
 import InfoRealtor from "./components/InfoRealtor";
