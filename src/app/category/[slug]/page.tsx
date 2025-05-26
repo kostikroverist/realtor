@@ -10,13 +10,12 @@ const categoriesData = {
 
 type CategoryKey = keyof typeof categoriesData;
 
-interface Props {
-  params: { slug: CategoryKey };
-}
-
-// Remove 'async' and destructure params or slug directly
-export default function CategoryPage({ params }: Props) { // Or: ({ params: { slug } }: Props)
-  const slug = params.slug; // if you used { params }: Props
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ slug: CategoryKey }>;
+}) {
+  const { slug } = await params;
   const category = categoriesData[slug];
 
   if (!category) {
