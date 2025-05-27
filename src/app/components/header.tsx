@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react"; // можна встановити: npm install lucide-react
+import { Menu, X } from "lucide-react";
 import { FaHome } from "react-icons/fa";
 
 const Header = () => {
@@ -12,11 +12,7 @@ const Header = () => {
 
   return (
     <div
-      className="h-screen bg-cover bg-center bg-black/10 bg-blend-darken"
-      style={{
-        backgroundImage:
-          "url('./images/2.jpg')",
-      }}
+      className="bg-img h-screen bg-cover bg-center bg-black/10 bg-blend-darken"
     >
       <div className="max-w-[1280px] mx-auto">
         <nav className="flex items-center justify-between p-6 bg-black/50 text-white text-[18px] relative">

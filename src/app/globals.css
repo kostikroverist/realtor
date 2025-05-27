@@ -1,1 +1,7 @@
+
 @import "tailwindcss";
+
+
+.bg-img {
+    background-image: url("../../public/images/2.jpg");
+  }
