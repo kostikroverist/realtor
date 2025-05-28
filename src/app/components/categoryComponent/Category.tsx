@@ -6,7 +6,7 @@ import Link from "next/link";
 interface CategoryCardProps {
   title: string;
   image: string;
-  slug: string; // додаємо slug
+  slug: string; 
 }
 
 export const CategoryCard: React.FC<CategoryCardProps> = ({
@@ -24,12 +24,12 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
           className="object-cover rounded-t-lg"
         />
       </div>
-      <div
+      <button
         className="shadow-md text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600
         hover:bg-gradient-to-br font-medium rounded-b-lg text-sm px-5 py-2.5 text-center w-full"
       >
         {title}
-      </div>
+      </button>
     </Link>
   );
 };

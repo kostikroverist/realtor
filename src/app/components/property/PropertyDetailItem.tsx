@@ -8,14 +8,14 @@ interface PropertyDetailItemProps {
 }
 
 const PropertyDetailItem: React.FC<PropertyDetailItemProps> = ({ label, value, currency }) => {
-  if (value === null || value === undefined || value === "") {
-    return null; // Не рендеримо, якщо значення порожнє
+  if (value === null || value === undefined || String(value).trim() === "") {
+    return null;
   }
 
   return (
-    <div className="mb-2">
-      <span className="font-semibold">{label}: </span>
-      <span>{value} {currency && value ? currency : ''}</span>
+    <div className="text-[14px] text-gray-600 mb-0.5"> 
+      <span className="font-medium text-gray-700">{label}: </span>
+      {String(value)}{currency && String(value).trim() !== "" ? ` ${currency}` : ''}
     </div>
   );
 };
