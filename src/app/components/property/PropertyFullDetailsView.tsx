@@ -7,7 +7,7 @@ import { PropertyDetailData, PropertyPhoto } from "interfaces/property"; // Пе
 // Імпорти для Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y, Autoplay, Thumbs } from "swiper/modules"; // Додано Thumbs
-
+import type { Swiper as SwiperInstance } from 'swiper';
 // Стилі Swiper (обов'язково імпортувати!)
 import "swiper/css";
 import "swiper/css/navigation";
@@ -17,7 +17,7 @@ import "swiper/css/thumbs"; // Стилі для мініатюр
 const PropertyFullDetailsView: React.FC<{ property: PropertyDetailData }> = ({
   property,
 }) => {
-  const [thumbsSwiper, setThumbsSwiper] = React.useState<any>(null); // Тип 'any' для простоти, можна уточнити тип Swiper instance
+   const [thumbsSwiper, setThumbsSwiper] = React.useState<SwiperInstance | null>(null);
 
   // Фільтруємо фото, щоб уникнути помилок, якщо value відсутнє
   const validPhotos: PropertyPhoto[] =
