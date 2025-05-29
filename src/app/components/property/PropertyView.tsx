@@ -13,8 +13,7 @@ const PropertyView: React.FC<PropertyViewProps> = ({ property }) => {
   return (
     <Link
       href={propertyUrl}
-      className="block h-full group"
-      legacyBehavior={false}
+      className="block h-full group cursor-pointer"
     >
       <div className="bg-white rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-250 ease-in-out overflow-hidden flex flex-col h-full cursor-pointer">
         {property.SmallPhoto && (
