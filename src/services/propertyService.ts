@@ -6,6 +6,7 @@ const API_BASE_URL = 'https://crmmls.com/service.svc';
 
 export const getProperty = async (propertyId: number, someId: number): Promise<PropertyData> => { 
   const response = await axios.get<PropertyData>(`${API_BASE_URL}/clientobject/property/${propertyId}/${someId}`);
+  console.log(response.data)
   return response.data;
 };
 

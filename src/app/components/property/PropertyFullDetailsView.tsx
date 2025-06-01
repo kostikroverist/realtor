@@ -24,7 +24,7 @@ const PropertyFullDetailsView: React.FC<{ property: PropertyDetailData }> = ({
     property.Photo?.filter((photo) => photo && photo.value) || [];
 
   return (
-    <div className="bg-white rounded-lg shadow-xl p-4 sm:p-6 md:p-8 max-w-4xl mx-auto my-8">
+    <div className="bg-white rounded-lg shadow-xl p-4 sm:p-6 md:p-8 max-w-6xl mx-auto ">
       {property.SmallPhoto && (
         <div className="w-full h-64 sm:h-80 md:h-96 rounded-md overflow-hidden mb-6 shadow">
           <img
@@ -83,7 +83,7 @@ const PropertyFullDetailsView: React.FC<{ property: PropertyDetailData }> = ({
           <h2 className="text-xl font-semibold text-gray-700 mb-2">
             Детальний опис:
           </h2>
-          <p className="text-gray-600 whitespace-pre-wrap leading-relaxed">
+          <p className="text-gray-600 whitespace-pre-wrap leading-relaxed text-[18px]">
             {property.plain_description}
           </p>
         </div>

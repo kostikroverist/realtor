@@ -13,7 +13,7 @@ const PropertyDetailItem: React.FC<PropertyDetailItemProps> = ({ label, value, c
   }
 
   return (
-    <div className="text-[14px] text-gray-600 mb-0.5"> 
+    <div className="text-[18px] text-gray-600 mb-0.5"> 
       <span className="font-medium text-gray-700">{label}: </span>
       {String(value)}{currency && String(value).trim() !== "" ? ` ${currency}` : ''}
     </div>

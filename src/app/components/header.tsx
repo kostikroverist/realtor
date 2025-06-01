@@ -8,12 +8,10 @@ import { FaHome } from "react-icons/fa";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () =>  setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <div
-      className="bg-img h-screen bg-cover bg-center bg-black/10 bg-blend-darken"
-    >
+    <div className="bg-img h-screen bg-cover bg-center bg-black/10 bg-blend-darken">
       <div className="max-w-[1280px] mx-auto">
         <nav className="flex items-center justify-between p-6 bg-black/50 text-white text-[18px] relative">
           <div className="flex items-center gap-2">
@@ -21,12 +19,13 @@ const Header = () => {
             <span className="font-bold text-white">RealEstate</span>
           </div>
           {/* Desktop menu */}
-          <div className="hidden md:flex gap-7">
+          <div className="hidden md:flex gap-5">
             <Link href="/">Головна</Link>
             <Link href="category/buy">Купити</Link>
-            <Link href="category/rent">Оренда</Link>
+            <Link href="category/rent">Комерція</Link>
             <Link href="category/land">Земельні ділянки</Link>
             <Link href="category/houses">Будинки</Link>
+            <Link href="category/flats">Квартири</Link>
             <Link href="category/about">Про мене</Link>
           </div>
 
@@ -42,12 +41,13 @@ const Header = () => {
           {/* Mobile menu */}
           {isOpen && (
             <div className="absolute top-full left-0 w-full bg-black/90 text-white flex flex-col gap-6 p-6 z-10 md:hidden">
-             <Link href="/">Головна</Link>
-            <Link href="category/buy">Купити</Link>
-            <Link href="category/rent">Оренда</Link>
-            <Link href="category/land">Земельні ділянки</Link>
-            <Link href="category/houses">Будинки</Link>
-            <Link href="category/about">Про мене</Link>
+              <Link href="/">Головна</Link>
+              <Link href="category/buy">Купити</Link>
+              <Link href="category/rent">Комерція</Link>
+              <Link href="category/land">Земельні ділянки</Link>
+              <Link href="category/houses">Будинки</Link>
+              <Link href="/category/flats">Квартири</Link>
+              <Link href="category/about">Про мене</Link>
             </div>
           )}
         </nav>
