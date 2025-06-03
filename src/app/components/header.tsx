@@ -21,12 +21,11 @@ const Header = () => {
           {/* Desktop menu */}
           <div className="hidden md:flex gap-5">
             <Link href="/">Головна</Link>
-            <Link href="category/buy">Купити</Link>
-            <Link href="category/rent">Комерція</Link>
-            <Link href="category/land">Земельні ділянки</Link>
-            <Link href="category/houses">Будинки</Link>
-            <Link href="category/flats">Квартири</Link>
-            <Link href="category/about">Про мене</Link>
+            <Link href="/category/rent">Комерція</Link>
+            <Link href="/category/land">Земельні ділянки</Link>
+            <Link href="/category/houses">Будинки</Link>
+            <Link href="/category/flats">Квартири</Link>
+            <Link href="/onthemap">На карті</Link>
           </div>
 
           {/* Burger button */}
@@ -42,12 +41,11 @@ const Header = () => {
           {isOpen && (
             <div className="absolute top-full left-0 w-full bg-black/90 text-white flex flex-col gap-6 p-6 z-10 md:hidden">
               <Link href="/">Головна</Link>
-              <Link href="category/buy">Купити</Link>
-              <Link href="category/rent">Комерція</Link>
-              <Link href="category/land">Земельні ділянки</Link>
-              <Link href="category/houses">Будинки</Link>
+              <Link href="/category/rent">Комерція</Link>
+              <Link href="/category/land">Земельні ділянки</Link>
+              <Link href="/category/houses">Будинки</Link>
               <Link href="/category/flats">Квартири</Link>
-              <Link href="category/about">Про мене</Link>
+              <Link href="/onthemap">На карті</Link>
             </div>
           )}
         </nav>

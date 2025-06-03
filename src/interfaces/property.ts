@@ -1,5 +1,42 @@
 // /interfaces/property.ts (або в іншому відповідному місці)
+// interfaces/properties.ts (або де ти зберігаєш типи)
 
+export interface PropertyAddress {
+  AdditionalStreetInfo: string | null;
+  City: string | null;
+  CommunityName: string | null;
+  Country: string | null;
+  Neighbourhood: string | null;
+  PostalCode: string | null;
+  Province: string | null;
+  StreetAddress: string | null;
+  Street_Name: string | null;
+  Subdivision: string | null;
+  en_Subdivision: string | null;
+  id: string | null; // ID адреси, якщо є
+  lat: string | null;
+  lng: string | null;
+  street_code: string | null;
+}
+
+// Основний тип об'єкта нерухомості
+export interface PropertyListing {
+  id: string | number; // Унікальний ID самого об'єкта
+  oid?: string | number; // Альтернативний ID
+  name?: string; // Назва об'єкта, може бути взята з адреси чи іншого поля
+  address: PropertyAddress; // <--- Вбудований об'єкт адреси
+  uinfo?: UserInfo; // Твоє поле для фільтрації
+  // ... інші специфічні поля для нерухомості
+}
+
+// Тип для об'єктів, підготовлених для карти (з числовими координатами)
+export interface MappedProperty {
+  id: string | number;
+  name?: string;
+  latitude: number;  // Числове значення
+  longitude: number; // Числове значення
+  originalData: PropertyListing; // Зберігаємо оригінальний об'єкт для доступу до всіх даних в Popup
+}
 export interface UserInfo {
   agency: string | null;
   blogid: string | null;
@@ -150,7 +187,7 @@ export interface PropertyAddress {
   Subdivision: string | null;
   en_Subdivision: string | null;
   id: string | null;
-  lang: string | null; // Можливо, помилка в даних, зазвичай lat
+  lat: string | null; // Можливо, помилка в даних, зазвичай lat
   lng: string | null; // Можливо, помилка в даних, зазвичай lng
   street_code: string | null;
 }

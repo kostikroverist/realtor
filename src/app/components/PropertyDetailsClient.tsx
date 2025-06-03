@@ -44,7 +44,6 @@ const PropertyDetailsClient: React.FC<Props> = ({ categoryData }) => {
     activeEndpoint ? activeEndpoint.propertyId : 0
   );
 
-  // Обробка кнопки для зміни активного ендпоінту
   const handleSubCategorySelect = (subCategory: SubCategoryConfig) => {
     setActiveEndpoint({
       property: subCategory.property,

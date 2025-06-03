@@ -14,7 +14,6 @@ export interface SubCategoryConfig {
   }
   
   export interface AllCategoriesData {
-    buy: CategoryConfig;
     rent: CategoryConfig;
     land: CategoryConfig;
     houses: CategoryConfig;
