@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Цей рядок вже є на початку вашого файлу
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -9,24 +9,59 @@ const SimpleHeader = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="bg-black text-white px-6 py-4 relative z-50">
+    // Змінюємо z-50 на z-[1000] або інше достатньо велике значення
+    <header className="bg-black text-white px-6 py-4  z-[1000] sticky top-0">
+      {" "}
+      {/* <--- ОСЬ ЗМІНА */}
       <nav className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <FaHome size={24} />
-          <span className="font-bold text-white text-lg">RealEstate</span>
-        </div>
+        <Link href="/">
+          <div className="flex items-center gap-2">
+            <FaHome size={24} />
+            <span className="font-bold text-white">ВашДім</span>
+          </div>
+        </Link>
 
         <div className="hidden md:flex gap-5 text-[16px]">
-          <Link href="/">Головна</Link>
-          <Link href="/category/rent">Комерція</Link>
-          <Link href="/category/land">Земельні ділянки</Link>
-          <Link href="/category/houses">Будинки</Link>
-          <Link href="/category/flats">Квартири</Link>
-          <Link href="/onthemap">На карті</Link>
+          <Link
+            href="/"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Головна
+          </Link>
+          <Link
+            href="/category/rent"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Комерція
+          </Link>
+          <Link
+            href="/category/land"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Земельні ділянки
+          </Link>
+          <Link
+            href="/category/houses"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Будинки
+          </Link>
+          <Link
+            href="/category/flats"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Квартири
+          </Link>
+          <Link
+            href="/onthemap"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            На карті
+          </Link>
         </div>
 
         <button
-          className="md:hidden z-20"
+          className="md:hidden z-20" // z-index кнопки меню відносно хедера, це ОК
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
@@ -34,13 +69,45 @@ const SimpleHeader = () => {
         </button>
       </nav>
       {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-black text-white flex flex-col gap-4 p-6 md:hidden">
-          <Link href="/">Головна</Link>
-          <Link href="/category/rent">Комерція</Link>
-          <Link href="/category/land">Земельні ділянки</Link>
-          <Link href="/category/houses">Будинки</Link>
-          <Link href="/category/flats">Квартири</Link>
-          <Link href="/onthemap">На карті</Link>
+        // Випадаюче меню є дочірнім елементом хедера, тому воно успадкує його контекст накладання.
+        // Додатковий z-index тут зазвичай не потрібен, якщо z-index батьківського хедера достатньо високий.
+        <div className="absolute top-full left-0 w-full text-center bg-black text-white flex flex-col gap-4 p-6 md:hidden">
+          <Link
+            href="/"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Головна
+          </Link>
+          <Link
+            href="/category/rent"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Комерція
+          </Link>
+          <Link
+            href="/category/land"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Земельні ділянки
+          </Link>
+          <Link
+            href="/category/houses"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Будинки
+          </Link>
+          <Link
+            href="/category/flats"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            Квартири
+          </Link>
+          <Link
+            href="/onthemap"
+            className="text-white py-[5px] border-b-2 border-transparent transition-colors duration-300 ease-in-out hover:text-sky-500 hover:border-sky-500 focus:text-sky-500 focus:border-sky-500"
+          >
+            На карті
+          </Link>
         </div>
       )}
     </header>

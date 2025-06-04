@@ -21,7 +21,7 @@ const PropertyDetailPage = () => {
 
   if (isError || !property) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen text-center px-4">
+      <div  className="flex flex-col justify-center items-center min-h-screen text-center px-4">
         <h2 className="text-2xl font-bold text-red-600 mb-4">Помилка завантаження даних</h2>
         <p className="text-gray-700">
           На жаль, не вдалося завантажити інформацію про об&apos;єкт.
@@ -34,7 +34,7 @@ const PropertyDetailPage = () => {
   }
 
   return (
-    <main className="bg-gray-100 py-6 sm:py-12"> {/* Фон для сторінки */}
+    <main data-aos="fade-right" className="bg-gray-100 py-6 sm:py-12"> {/* Фон для сторінки */}
       <PropertyFullDetailsView property={property} />
     </main>
   );

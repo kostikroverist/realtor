@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import { useInView } from "react-intersection-observer";
@@ -20,6 +20,7 @@ const CounterSells = () => {
       </h2>
 
       <div
+        data-aos="fade-up"
         ref={ref}
         className="gap-8 md:gap-24 max-w-[1280px] mx-auto flex flex-col md:flex-row justify-center items-center"
       >

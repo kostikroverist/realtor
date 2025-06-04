@@ -4,18 +4,14 @@ import { CategoryCard } from "./Category";
 
 const Categories = () => {
   return (
-    <div className="max-w-[1280px] mx-auto">
+    <div  data-aos="fade-right" data-aos-duration="2000"  className="max-w-[1280px] mx-auto" id="categories">
       <h2 className="text-3xl lg:text-4xl font-bold mb-10 text-center mt-5 md:mt-10">
         Категорії
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
+
         <CategoryCard
-          title="Купити"
-          slug="buy"
-          image="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80"
-        />
-        <CategoryCard
-          title="Оренда"
+          title="Комерція"
           slug="rent"
           image="https://visitukraine.today/media/blog/previews/FCe7vULIXZgMWLtsS9DZ52NM9wEhu6agl1BtBJOV.webp"
         />

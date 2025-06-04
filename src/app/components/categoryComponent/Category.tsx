@@ -16,7 +16,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
   return (
     <Link href={`/category/${slug}`} className="max-w-[450px] shadow-lg rounded-lg transition-all duration-300 hover:scale-105">
-      <div className="relative w-[250px] md:w-[350px] xl:w-[450px] h-[250px] bg-amber-900 rounded-t-lg ">
+      <div className="relative w-[250px] md:w-[350px] xl:w-[450px] h-[250px] rounded-t-lg ">
         <Image
           src={image}
           alt={title}

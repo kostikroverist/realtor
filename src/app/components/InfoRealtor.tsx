@@ -7,8 +7,8 @@ const InfoRealtor = () => {
       <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-center">
         Інформація про мене
       </h2>
-      <div className="flex flex-col md:flex-row items-center md:justify-evenly max-w-[1280px] mx-auto mt-[30px]">
-        <div className="flex justify-center mb-5 ">
+      <div  className="flex flex-col md:flex-row items-center md:justify-evenly max-w-[1280px] mx-auto mt-[30px]">
+        <div data-aos="fade-right" className="flex justify-center mb-5 ">
           <Image
             src="/images/realtor.jpg"
             alt="Realtor"
@@ -17,7 +17,7 @@ const InfoRealtor = () => {
             className="rounded-[50%] shadow-lg"
           />
         </div>
-        <p className="text-gray-700 max-w-[500px] text-center ">
+        <p data-aos="fade-right" className="text-gray-700 max-w-[500px] text-center ">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry&apos;s standard dummy text
           ever since the 1500s, when an unknown printer took a galley of type
