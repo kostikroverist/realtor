@@ -9,7 +9,6 @@ const PropertyDetailPage = () => {
   const oid = typeof params.oid === 'string' ? params.oid : undefined; 
 
   const { data: property, isLoading, error, isError } = usePropertyByOid(oid);
-    console.log(oid)
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
