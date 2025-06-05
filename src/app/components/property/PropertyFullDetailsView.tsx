@@ -1,39 +1,106 @@
 // /components/Property/PropertyFullDetailsView.tsx
 "use client";
-import React from "react";
-import PropertyDetailItem from "./PropertyDetailItem"; // Переконайся, що шлях правильний
-import { PropertyDetailData, PropertyPhoto } from "interfaces/property"; // Переконайся, що шлях правильний
+import React, { useState, useEffect, useMemo } from "react"; // Додано useState, useEffect, useMemo
+import PropertyDetailItem from "./PropertyDetailItem";
+import { PropertyDetailData, PropertyPhoto } from "interfaces/property";
 
 // Імпорти для Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, A11y, Autoplay, Thumbs } from "swiper/modules"; // Додано Thumbs
-import type { Swiper as SwiperInstance } from 'swiper';
-// Стилі Swiper (обов'язково імпортувати!)
+import type { Swiper as SwiperInstance } from "swiper"; // Тип для екземпляру Swiper
+import { Navigation, Pagination, A11y, Autoplay, Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/thumbs"; // Стилі для мініатюр
+import "swiper/css/thumbs";
+
+// Імпорти для Lightbox
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+// Плагіни для Lightbox (виберіть потрібні)
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/plugins/thumbnails.css"; // Стилі для мініатюр в lightbox (якщо використовуєте)
 
 const PropertyFullDetailsView: React.FC<{ property: PropertyDetailData }> = ({
   property,
 }) => {
-   const [thumbsSwiper, setThumbsSwiper] = React.useState<SwiperInstance | null>(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperInstance | null>(null);
+  const [mainSwiper, setMainSwiper] = useState<SwiperInstance | null>(null); // Екземпляр основного Swiper для синхронізації
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  // Фільтруємо фото, щоб уникнути помилок, якщо value відсутнє
-  const validPhotos: PropertyPhoto[] =
-    property.Photo?.filter((photo) => photo && photo.value) || [];
+  // Фільтруємо фото та мемоїзуємо результат
+  const validPhotos: PropertyPhoto[] = useMemo(
+    () => property.Photo?.filter((photo) => photo && photo.value) || [],
+    [property.Photo]
+  );
+
+  // Готуємо слайди для Lightbox (мемоїзуємо)
+  const lightboxSlides = useMemo(() => {
+    if (validPhotos.length > 0) {
+      return validPhotos.map((photo) => ({
+        src: `https://redlockbox.blob.core.windows.net/public/${photo.value}`,
+        alt: `Фото ${property.title || "об'єкта"}`,
+        // title: `Заголовок для фото ${photo.id}` // Опціонально
+      }));
+    } else if (property.SmallPhoto) {
+      return [
+        {
+          src: `https://redlockbox.blob.core.windows.net/public/${property.SmallPhoto}`,
+          alt: property.title || "Фото об'єкта",
+        },
+      ];
+    }
+    return [];
+  }, [validPhotos, property.SmallPhoto, property.title]);
+
+  // Функція для відкриття Lightbox для одного зображення (коли немає галереї)
+  const openSingleImageLightbox = () => {
+    if (lightboxSlides.length > 0) {
+      // Переконуємось, що є що показувати
+      setLightboxIndex(0);
+      setLightboxOpen(true);
+    }
+  };
+
+  // Синхронізація Swiper з Lightbox (коли користувач гортає в Lightbox, Swiper оновлюється)
+  useEffect(() => {
+    if (
+      lightboxOpen &&
+      mainSwiper &&
+      !mainSwiper.destroyed &&
+      validPhotos.length > 0
+    ) {
+      // Перевіряємо, чи індекс в межах допустимого для Swiper
+      if (lightboxIndex >= 0 && lightboxIndex < validPhotos.length) {
+        if (mainSwiper.params.loop) {
+          mainSwiper.slideToLoop(lightboxIndex);
+        } else {
+          mainSwiper.slideTo(lightboxIndex);
+        }
+      }
+    }
+  }, [lightboxIndex, lightboxOpen, mainSwiper, validPhotos]); // Додав validPhotos в залежності
+
+  // Визначаємо, чи показувати окреме SmallPhoto зверху
+  // Показуємо, якщо немає галереї (validPhotos), але є SmallPhoto
+  const showTopSmallPhoto = !validPhotos.length && property.SmallPhoto;
 
   return (
     <div className="bg-white rounded-lg shadow-xl p-4 sm:p-6 md:p-8 max-w-6xl mx-auto ">
-      {property.SmallPhoto && (
-        <div className="w-full h-64 sm:h-80 md:h-96 rounded-md overflow-hidden mb-6 shadow">
-          <img
-            src={`https://redlockbox.blob.core.windows.net/public/${property.SmallPhoto}`}
-            alt={property.title || "Фото об'єкта"}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
+      <div
+        className="w-full h-64 sm:h-80 md:h-96 rounded-md overflow-hidden mb-6 shadow cursor-pointer"
+        onClick={openSingleImageLightbox} // Клік відкриває Lightbox
+      >
+        <img
+          src={`https://redlockbox.blob.core.windows.net/public/${property.SmallPhoto!}`}
+          alt={property.title || "Фото об'єкта"}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      {/* Інформація про об'єкт (без змін) */}
       <div className="mb-6 pb-4 border-b border-gray-200">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2">
           {property.title || "Назва об'єкта не вказана"}
@@ -52,7 +119,6 @@ const PropertyFullDetailsView: React.FC<{ property: PropertyDetailData }> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 mb-6">
         <PropertyDetailItem label="Адреса" value={property.adres} />
         <PropertyDetailItem label="Тип" value={property.apartment_type_name} />
-        {/* Для землі використовуємо Land.SizeTotalText, для іншого - tsquare */}
         <PropertyDetailItem
           label="Площа"
           value={
@@ -116,78 +182,103 @@ const PropertyFullDetailsView: React.FC<{ property: PropertyDetailData }> = ({
               <PropertyDetailItem label="Ім'я" value={property.uinfo.name} />
               <PropertyDetailItem
                 label="Телефон"
-                value={property.uinfo.mobphone}
+                value={
+                  <a
+                    href={`tel:${property.uinfo.mobphone}`}
+                    className="hover:underline"
+                  >
+                    {property.uinfo.mobphone}
+                  </a>
+                }
               />
               {property.uinfo.email && (
                 <PropertyDetailItem
                   label="Email"
-                  value={property.uinfo.email}
+                  value={
+                    <a
+                      href={`mailto:${property.uinfo.email}`}
+                      className="hover:underline"
+                    >
+                      {property.uinfo.email}
+                    </a>
+                  }
                 />
               )}
             </div>
           </div>
         </div>
       )}
-      {/* Фотогалерея */}
+      {/* Фотогалерея Swiper (якщо є validPhotos) */}
       {validPhotos.length > 0 ? (
-        <div className="bg-gray-100">
+        <div className="bg-gray-100 mt-8 pt-4 pb-1">
           {" "}
-          {/* Фон для секції галереї */}
+          {/* Додав відступи для секції галереї */}
           {/* Основна карусель */}
           <Swiper
+            onSwiper={setMainSwiper} // Зберігаємо екземпляр основного Swiper
             modules={[Navigation, Pagination, A11y, Autoplay, Thumbs]}
             spaceBetween={10}
             slidesPerView={1}
             navigation
             pagination={{ clickable: true, dynamicBullets: true }}
-            loop={validPhotos.length > 1}
+            loop={validPhotos.length > 1} // Вмикаємо loop, якщо більше одного фото
             autoplay={{
-              delay: 7000, // Збільшено затримку
+              delay: 7000,
               disableOnInteraction: false,
             }}
             thumbs={{
               swiper:
                 thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
-            }} // Зв'язок з мініатюрами
-            className="w-full h-[300px] xs:h-[350px] sm:h-[450px] md:h-[550px] lg:h-[600px] xl:h-[650px]" // Адаптивна висота
+            }}
+            className="w-full h-[300px] xs:h-[350px] sm:h-[450px] md:h-[550px] lg:h-[600px] xl:h-[650px] mb-3"
           >
-            {validPhotos.map((photoItem) => (
-              <SwiperSlide key={`main-${photoItem.id || photoItem.value}`}>
+            {validPhotos.map((photoItem, index) => (
+              <SwiperSlide
+                key={`main-${photoItem.id || photoItem.value}-${index}`} // Унікальний ключ
+                onClick={() => {
+                  setLightboxIndex(index); // Індекс беремо з map, він відповідає lightboxSlides
+                  setLightboxOpen(true);
+                }}
+                className="cursor-pointer bg-black/5" // Додав фон для object-contain
+              >
                 <img
                   src={`https://redlockbox.blob.core.windows.net/public/${photoItem.value}`}
-                  alt={`Фото ${property.title || "об'єкта"}`}
-                  className="w-full h-full object-contain bg-black/5" // object-contain щоб бачити все фото, bg-black/5 для фону
+                  alt={`Фото ${property.title || "об'єкта"} - ${index + 1}`}
+                  className="w-full h-full object-contain" // object-contain для повного показу
                 />
               </SwiperSlide>
             ))}
           </Swiper>
-          {/* Карусель мініатюр (Thumbs) - відображається, якщо більше 1 фото */}
+          {/* Карусель мініатюр (Thumbs) */}
           {validPhotos.length > 1 && (
             <div className="py-3 bg-gray-200">
+              {" "}
+              {/* Обгортка для мініатюр */}
               <Swiper
                 onSwiper={setThumbsSwiper}
                 loop={false} // Мініатюри зазвичай не зациклюють
                 spaceBetween={10}
-                slidesPerView={3} // Початкова кількість видимих мініатюр
+                slidesPerView={3}
                 freeMode={true}
                 watchSlidesProgress={true}
                 modules={[Thumbs]}
-                className="h-20 sm:h-24 md:h-28 max-w-3xl mx-auto px-4" // Обмеження ширини для кращого вигляду
+                className="h-20 sm:h-24 md:h-28 max-w-3xl mx-auto px-4"
                 breakpoints={{
-                  // Адаптивність кількості мініатюр
                   640: { slidesPerView: 4, spaceBetween: 10 },
                   768: { slidesPerView: 5, spaceBetween: 10 },
                   1024: { slidesPerView: 6, spaceBetween: 15 },
                 }}
               >
-                {validPhotos.map((photoItem) => (
+                {validPhotos.map((photoItem, index) => (
                   <SwiperSlide
-                    key={`thumb-${photoItem.id || photoItem.value}`}
+                    key={`thumb-${photoItem.id || photoItem.value}-${index}`}
                     className="cursor-pointer opacity-60 hover:opacity-100 transition-opacity rounded overflow-hidden border-2 border-transparent swiper-slide-thumb-active:border-indigo-500 swiper-slide-thumb-active:opacity-100"
                   >
                     <img
                       src={`https://redlockbox.blob.core.windows.net/public/${photoItem.value}`}
-                      alt={`Мініатюра ${property.title || "об'єкта"}`}
+                      alt={`Мініатюра ${property.title || "об'єкта"} ${
+                        index + 1
+                      }`}
                       className="w-full h-full object-cover"
                     />
                   </SwiperSlide>
@@ -196,18 +287,48 @@ const PropertyFullDetailsView: React.FC<{ property: PropertyDetailData }> = ({
             </div>
           )}
         </div>
-      ) : property.SmallPhoto ? (
-        <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] bg-gray-200 flex items-center justify-center">
-          <img
-            src={`https://redlockbox.blob.core.windows.net/public/${property.SmallPhoto}`}
-            alt={property.title || "Фото об'єкта"}
-            className="max-w-full max-h-full object-contain"
-          />
-        </div>
-      ) : (
-        <div className="w-full h-[250px] bg-gray-200 flex items-center justify-center text-gray-500 text-lg">
+      ) : !showTopSmallPhoto ? ( // Якщо немає validPhotos і не було показано SmallPhoto зверху
+        <div className="w-full h-[250px] bg-gray-200 flex items-center justify-center text-gray-500 text-lg mt-6">
           Фото не доступне
         </div>
+      ) : null}{" "}
+      {/* Якщо showTopSmallPhoto було true, то фото вже показано, тут нічого */}
+      {/* Lightbox компонент (рендериться завжди, якщо є слайди, але видимий тільки коли open=true) */}
+      {lightboxSlides.length > 0 && (
+        <Lightbox
+          open={lightboxOpen}
+          close={() => setLightboxOpen(false)}
+          slides={lightboxSlides}
+          index={lightboxIndex}
+          on={{
+            // Оновлюємо lightboxIndex при зміні слайда всередині lightbox
+            view: ({ index: currentIndex }) => setLightboxIndex(currentIndex),
+          }}
+          // Додайте плагіни, які вам потрібні
+          plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+          // Налаштування для плагінів (опціонально)
+          fullscreen={{ auto: false }} // автоматично не активує fullscreen ОС, а розтягує на весь viewport
+          slideshow={{ autoplay: false, delay: 5000 }}
+          thumbnails={{
+            position: "bottom",
+            width: 100,
+            height: 70,
+            border: 1,
+            borderRadius: 4,
+            padding: 1, // Відступ між рамкою та зображенням
+            gap: 8, // Відступ між мініатюрами
+          }}
+          zoom={{
+            maxZoomPixelRatio: 3, // Максимальне наближення
+            scrollToZoom: true, // Дозволяє зум колесом мишки
+          }}
+          controller={{ closeOnBackdropClick: true }} // Закривати по кліку на фон
+          // Кастомізація кнопок (наприклад, ховати, якщо одне фото)
+          render={{
+            buttonPrev: lightboxSlides.length <= 1 ? () => null : undefined,
+            buttonNext: lightboxSlides.length <= 1 ? () => null : undefined,
+          }}
+        />
       )}
     </div>
   );

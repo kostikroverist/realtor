@@ -13,8 +13,6 @@ export default async function CategoryPage({
   params: Promise<{ slug: CategoryKey }>;
 }) {
   const { slug } = await params;
-  // Важливо: categoriesData має бути типізований як AllCategoriesData
-  // для коректної роботи з TypeScript
   const category = (categoriesData as AllCategoriesData)[slug];
 
   if (!category) {
@@ -23,8 +21,8 @@ export default async function CategoryPage({
 
   return (
     <div className="max-w-4xl mx-auto py-10">
-      <h1 data-aos="fade-right" className="text-3xl font-bold mb-4">{category.title}</h1>
-      <p  data-aos="fade-right" className="text-lg text-gray-700">{category.description}</p>
+      <h1 data-aos="fade-right" className="text-3xl font-bold mb-4 text-center md:text-left">{category.title}</h1>
+      <p  data-aos="fade-right" className="text-lg text-gray-700 text-center md:text-left">{category.description}</p>
       <PropertyDetailsClient categoryData={category} />
     </div>
   );
